@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap
+data:
+  dbserver: mongodb-service
+  pgr2server: r2dbc:postgresql://mypostgres:5432/postgres
+  pgserver: jdbc:postgresql://mypostgres:5432/postgres
+  pgusername: postgres
+  servers.json: |
+   {
+       "Servers": {
+         "1": {
+           "Name": "PostgreSQL DB",
+           "Group": "Servers",
+           "Port": 5432,
+           "Username": "postgres",
+           "Host": "mypostgres",
+           "SSLMode": "prefer",
+           "MaintenanceDB": "postgres"
+         }
+       }
+   }

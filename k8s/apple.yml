@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apple
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apple
+  template:
+    metadata:
+      labels:
+        app: apple
+    spec:
+      containers:
+      - name: apple
+        imagePullPolicy: Never
+        image: apple:3.0
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8081
+        env:
+          - name: PG_SERVER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: pgserver
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: dbsecret
+                key: postgres-root-password
+          - name: POSTGRES_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: pgusername
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apple-service
+spec:
+  selector:
+    app: apple
+  ports:
+    - port: 8081
+      targetPort: 8081

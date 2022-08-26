@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: store
+  zipkin:
+    base-url: http://zipkin:9411

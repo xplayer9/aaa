@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drink
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drink
+  template:
+    metadata:
+      labels:
+        app: drink
+    spec:
+      containers:
+      - name: drink
+        imagePullPolicy: Never
+        image: drink:3.0
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8083
+        env:
+          - name: PG_SERVER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: pgserver
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: dbsecret
+                key: postgres-root-password
+          - name: POSTGRES_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: pgusername
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drink-service
+spec:
+  selector:
+    app: drink
+  ports:
+    - port: 8083
+      targetPort: 8083
