@@ -2,10 +2,7 @@ package com.example.drink;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -41,5 +38,17 @@ public class DrinkController {
                 .build();
         rep.save(one);
         return one.kind+" saved successfully !!!";
+    }
+
+    @GetMapping("/del")
+    public Integer del(@RequestParam String name) {
+        int count = 0;
+        for(DrinkTableData n: rep.findAll()){
+            if(n.getKind() == null || n.getKind().equals(name)) {
+                rep.delete(n);
+                count++;
+            }
+        }
+        return count;
     }
 }

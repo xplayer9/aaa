@@ -2,16 +2,14 @@ package com.example.store;
 
 import com.example.clients.StoreToAppleClients;
 import com.example.clients.StoreToDrinkClients;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Map;
 
 //@AllArgsConstructor
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class StoreController {
 
     //@Autowired
@@ -23,7 +21,7 @@ public class StoreController {
 
     @GetMapping("/ver")
     public String ver(){
-        return this.toString() + " Ver 1.1.1.10";
+        return this.toString() + " Ver 1.1.1.12";
     }
 
     @PostMapping("/add")
@@ -61,5 +59,13 @@ public class StoreController {
         String ret1 = storeToAppleClients.list();
         String ret2 = storeToDrinkClients.list();
         return ret1+"<br>"+ret2;
+    }
+
+    @GetMapping("/del")
+    public String del(@RequestParam String name) {
+        int count = 0;
+        count += storeToAppleClients.del(name);
+        count += storeToDrinkClients.del(name);
+        return count+" items deleted !!!";
     }
 }

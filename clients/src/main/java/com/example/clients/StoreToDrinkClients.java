@@ -5,13 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
-@Service
 @FeignClient(
         name = "StoreToDrinkClients",
-        url = "drink-service:8083"
+        url = "drink-service"
 )
 public interface StoreToDrinkClients {
 
@@ -20,4 +20,7 @@ public interface StoreToDrinkClients {
 
     @PostMapping("add")
     String add(@RequestBody Map<String, String> map);
+
+    @GetMapping("/del")
+    Integer del(@RequestParam String name);
 }

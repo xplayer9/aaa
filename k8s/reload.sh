@@ -1,4 +1,4 @@
-BIN="store"
+BIN="drink"
 TAG="3.0"
 
 echo "===== Minikube check images"

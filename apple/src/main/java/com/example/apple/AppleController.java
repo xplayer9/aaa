@@ -2,11 +2,9 @@ package com.example.apple;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,7 +16,7 @@ public class AppleController {
 
     @GetMapping("/ver")
     public String ver(){
-        return this.toString() + " Ver 1.1.1.4";
+        return this.toString() + " Ver 1.1.1.5";
     }
 
     @GetMapping("/list")
@@ -41,5 +39,20 @@ public class AppleController {
                 .build();
         rep.save(one);
         return one.model+" saved successfully !!!";
+    }
+
+    @GetMapping("/del")
+    public Integer del(@RequestParam String name) {
+        int count = 0;
+        //log.info("Name: " + name);
+        //log.info("Data count: " + rep.count());
+        for(AppleTableData n: rep.findAll()){
+            //log.info("n: " + n.toString());
+            if(n.getModel() == null || n.getModel().equals(name)) {
+                rep.delete(n);
+                count++;
+            }
+        }
+        return count;
     }
 }

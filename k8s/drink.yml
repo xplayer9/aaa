@@ -47,5 +47,5 @@ spec:
   selector:
     app: drink
   ports:
-    - port: 8083
+    - port: 80
       targetPort: 8083
