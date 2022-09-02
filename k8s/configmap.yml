@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: configmap
 data:
-  dbserver: mongodb-service
+  zipkinserver: http://zipkin:9411
   pgr2server: r2dbc:postgresql://mypostgres:5432/postgres
   pgserver: jdbc:postgresql://mypostgres:5432/postgres
   pgusername: postgres

@@ -23,6 +23,11 @@ spec:
         ports:
         - containerPort: 8081
         env:
+          - name: ZIPKIN_URL
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: zipkinserver
           - name: PG_SERVER_URL
             valueFrom:
               configMapKeyRef:
